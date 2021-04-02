@@ -2,14 +2,20 @@ const { resolve } = require('path');
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const port = process.env.PORT || 3030;
 
 module.exports = {
     entry: './src/index.js',
     output: {
-      filename: 'bundle.js',
+      filename:  'js/[name].bundle.js',
       path: resolve(__dirname, 'dist'),
+    },
+    performance: {
+      hints: false,
+      maxEntrypointSize: 400000,
+      maxAssetSize: 100000,
     },
     module: {
         rules: [
@@ -26,15 +32,14 @@ module.exports = {
           },
           {
             test: /\.css$/,
-            exclude: /(node_modules)/,
             use: [
-              { loader: 'style-loader' },
-              { loader: 'css-loader' },
+             MiniCssExtractPlugin.loader, 'css-loader'
+               /*{ loader: 'style-loader', options :{ outputPath: "css/[name].[ext]" } },
+              { loader: 'css-loader', options :{ outputPath: "css/[name].[ext]" } },*/
             ],            
           },
           {
             test: /\.scss$/,
-            exclude: /(node_modules)/,
             use: [
               { loader: 'style-loader' },
               { loader: 'css-loader' },
@@ -42,21 +47,29 @@ module.exports = {
             ],
           },
           {
-            test: /\.(png|jpg|gif|svg)$/,
-            exclude: /(node_modules)/,
+            test: /\.(ttf|eot|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             use: [
-              { loader: 'file-loader' },
+              { loader: 'file-loader' , options :{ outputPath: 'fonts' }},
+              { loader: 'url-loader?limit=100000', options :{ outputPath: 'fonts' }},
+            ]            
+          },
+          {
+            test: /\.(jpe?g|gif|svg|png)$/i,
+            use: [
+              { loader: 'file-loader?limit=10000', options :{ outputPath: 'images' } },
             ],
           },
         ],
     },
     plugins: [
-      new CleanWebpackPlugin({
-        cleanAfterEveryBuildPatterns: ['dist']
-      }),
+      new CleanWebpackPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
-        template: 'src/index.html',
+        title : 'Base-Webpack',
+        template: './src/index.html',
+      }),
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].css',
       }),
     ],
     devServer: {
