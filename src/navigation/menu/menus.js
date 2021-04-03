@@ -31,7 +31,12 @@ class Menus extends Component {
                      active={activeItem === 'newitem'}
                      onClick={this.handleItemClick}                   
                 />
-
+                <Menu.Item 
+                     as={NavLink} to='/setting'
+                     name='setting'
+                     active={activeItem === 'setting'}
+                     onClick={this.handleItemClick}                   
+                />
             </Menu>
         )   
     }
