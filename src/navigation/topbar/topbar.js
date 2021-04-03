@@ -1,5 +1,6 @@
 import React,{ Component, PropTypes  } from "react";
-
+import { Segment } from "semantic-ui-react";
+import Menus from "../menu/menus";
 
 class Topbar extends Component {
     constructor(props){
@@ -11,9 +12,10 @@ class Topbar extends Component {
     }
 
     render(){
-
         return(
-
+            <Segment inverted color="violet">
+                <Menus />
+            </Segment>
         )   
     }
 }
