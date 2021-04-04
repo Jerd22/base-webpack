@@ -5,7 +5,11 @@
         "request": "launch",
         "type": "pwa-chrome",
         "url": "http://localhost:3030",
-        "webRoot": "${workspaceFolder}/index.html"
+        "webRoot": "${workspaceFolder}/index.html",
+        "resolveSourceMapLocations": [
+            "${workspaceFolder}/**",
+            "!**/node_modules/**"
+        ]
     }
     ]
 }

@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Segment } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 class Headers extends Component {
 
@@ -11,5 +12,9 @@ class Headers extends Component {
         )
     }
 }
+
+Headers.propTypes = {
+    name: PropTypes.string
+  };
 
 export default Headers;
