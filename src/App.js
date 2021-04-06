@@ -24,23 +24,19 @@ class  App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '123'
+            activeItem: 'category'
         };
-
-        this.onClick = this.onClick.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this);
     }
 
-    onClick = () => {
-        this.setState({
-            name : 'Jerd221'
-        })
-    }
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-    render() {
+    render() { 
+        const { activeItem } = this.state
         return (
-            <>
-                <style>{mediaStyles}</style>
-                <MediaContextProvider>
+        <>
+            <style>{mediaStyles}</style>
+            <MediaContextProvider>
                 <Segment as={Media} at="largeScreen" >
                     <Menu color="violet" inverted secondary>
                         <Menu.Item header>
@@ -48,30 +44,30 @@ class  App extends Component {
                         </Menu.Item>
                         <Menu.Menu position="left">
                             <Menu.Item 
-                                name="category"
-                                onClick={()=>{}}
-                            />
-                        </Menu.Menu>
+                                name='category' 
+                                active={activeItem === 'category'} 
+                                onClick={this.handleItemClick} 
+                            /> 
+                        </Menu.Menu> 
                         <Menu.Menu position="right" >
                             <Menu.Item>
                                 <Input placeholder='Search...' />
                             </Menu.Item>
-                            <Menu.Item
-                                onClick={()=>{}}
-                            >
-                                <FontAwesomeIcon icon={faUser} />
-                            </Menu.Item>
-
+                            <Menu.Item 
+                                name='สมัครสมาชิก' 
+                                active={activeItem === 'สมัครสมาชิก'} 
+                                onClick={this.handleItemClick} 
+                            />
+                            <Menu.Item 
+                                name='เข้าสู่ระบบ' 
+                                active={activeItem === 'เข้าสู่ระบบ'} 
+                                onClick={this.handleItemClick} 
+                            />
                         </Menu.Menu>
                     </Menu>
                 </Segment> 
-
-                {/*
-                <h1>Hello, {this.state.name}</h1>
-                <a onClick={this.onClick}>Change</a>
-                */}
-                </MediaContextProvider>
-            </>            
+            </MediaContextProvider>
+        </>            
         );
     }
 }
